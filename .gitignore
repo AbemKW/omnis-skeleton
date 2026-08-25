@@ -1,0 +1,52 @@
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Temporary files
+*.log
+tmp/
+temp/
+.tmp/
+.playwright-mcp/
+
+# Environment & secret files
+.env
+.env.local
+.mcp.json
+.claude/mcp-config.json
+.claude/settings.local.json
+.claude/*.lock
+*_auth.json
+*_credentials.json
+knowledge/_Memory/auth/
+scripts/*auth*
+
+# Obsidian UI & local workspace state
+knowledge/.obsidian/workspace.json
+knowledge/.obsidian/graph.json
+knowledge/.obsidian/workspace-mobile.json
+knowledge/.obsidian/plugins/
+knowledge/.obsidian/community-plugins.json
+
+# Node/Python
+node_modules/
+__pycache__/
+*.pyc
+.venv/
+env/
+
+# Raw meeting audio files (large binary assets — do not commit)
+knowledge/sources/meetings/raw/*.m4a
+knowledge/sources/meetings/raw/*.mp3
+knowledge/sources/meetings/raw/*.wav
+
+# Worktrees created by the delegate skill
+.claude/worktrees/
+.worktrees

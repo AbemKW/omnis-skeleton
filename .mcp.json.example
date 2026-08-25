@@ -1,0 +1,38 @@
+{
+  "mcpServers": {
+    "email": {
+      "command": "uvx",
+      "args": [
+        "--from",
+        "<your email-mcp source, e.g. git+https://github.com/<you>/email-mcp>",
+        "--with",
+        "mcp<2",
+        "email",
+        "mcp"
+      ]
+    },
+    "finance": {
+      "command": "node",
+      "args": [
+        "<absolute path to your plaid-mcp build>/dist/index.js"
+      ],
+      "env": {
+        "PLAID_CLIENT_ID": "<your plaid client id>",
+        "PLAID_SECRET": "<your plaid secret>",
+        "PLAID_ENV": "sandbox",
+        "ENCRYPTION_KEY": "<your local encryption key>",
+        "TOKENS_PATH": "<absolute path to>/tokens.enc.json"
+      }
+    },
+    "web-browser": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@playwright/mcp@latest",
+        "--isolated",
+        "--storage-state",
+        "<absolute path to>/knowledge/_Memory/auth/browser_auth.json"
+      ]
+    }
+  }
+}
