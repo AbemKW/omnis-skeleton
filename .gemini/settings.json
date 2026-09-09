@@ -1,4 +1,22 @@
 {
+  "mcpServers": {
+    "email": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "github:kerodkibatu/email-mcp"
+      ],
+      "trust": true
+    }
+  },
+  "tools": {
+    "allowed": [
+      "mcp_email_query_emails",
+      "mcp_email_read_email",
+      "mcp_email_list_accounts",
+      "mcp_email_list_calendar"
+    ]
+  },
   "hooks": {
     "SessionStart": [
       {
