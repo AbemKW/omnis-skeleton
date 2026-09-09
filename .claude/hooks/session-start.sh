@@ -4,6 +4,7 @@
 
 WORKSPACE="$(cd "$(dirname "$0")/../.." && pwd)"
 MEMORY="$WORKSPACE/knowledge/_Memory"
+PROTOCOLS="$WORKSPACE/knowledge/protocols"
 MAX_BYTES=30000
 TOTAL=0
 
@@ -32,6 +33,11 @@ emit() {
     TOTAL=$((TOTAL + size))
   fi
 }
+
+echo "## Protocols (always-on)"
+echo ""
+emit "$PROTOCOLS/communication.md"
+emit "$PROTOCOLS/scheduling.md"
 
 echo "## Identity"
 echo ""

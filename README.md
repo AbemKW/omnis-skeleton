@@ -8,7 +8,8 @@ A personal-intelligence workspace architecture for Claude Code (and Antigravity)
 
 - **`CLAUDE.md` / `AGENTS.md`** — the identity + operating rules the assistant reads at session start (Claude Code and Antigravity variants of the same config).
 - **`knowledge/_Memory/`** — the memory wiki. Ships empty except for `_agent-prompt.md` (the memory agent's own system prompt) and placeholder domain folders. See `.claude/skills/memory/SKILL.md` for how STORE/RECALL/MAINTAIN/INGEST work.
-- **`.claude/skills/`** — `memory` (wiki operations), `meeting-ingestor` (audio → transcript → memory pipeline), `delegate` (hand bulk implementation work to a secondary coding agent), `humanizer` (strip AI-writing tells from text, third-party skill included as-is).
+- **`knowledge/protocols/`** — situational governing text (communication tone, scheduling conventions, tool invocation reference) kept deliberately outside the memory wiki so it doesn't get treated as narrative memory. Loads on demand except for `communication.md`/`scheduling.md`, which auto-load every session.
+- **`.claude/skills/`** — `onboarding` (build/grow the memory wiki — an ongoing process, not a one-time step), `memory` (wiki operations), `meeting-ingestor` (audio → transcript → memory pipeline), `delegate` (hand bulk implementation work to a secondary coding agent), `humanizer` (strip AI-writing tells from text, third-party skill included as-is).
 - **`agents/meeting-analyst.md`** — the subagent prompt the meeting-ingestor pipeline dispatches to.
 - **`scripts/transcribe_meeting.py`** — local Whisper transcription for the meeting pipeline.
 - **`.claude/hooks/`** — session-start (loads identity/preferences/overview into context, bounded by a byte cap) and session-end (headless wrap-up + commit).
@@ -17,10 +18,11 @@ A personal-intelligence workspace architecture for Claude Code (and Antigravity)
 ## Getting started
 
 1. Fork/clone this repo.
-2. Open it in Claude Code (or Antigravity). On first run, the assistant should interview you and scaffold `knowledge/_Memory/identity/` and `knowledge/_Memory/preferences/` from your answers — see the **Onboarding** section at the bottom of `CLAUDE.md`.
+2. Open it in Claude Code (or Antigravity). On first run, the assistant should invoke the `onboarding` skill, interview you, and scaffold `knowledge/_Memory/identity/` and `knowledge/_Memory/preferences/` from your answers — see `.claude/skills/onboarding/SKILL.md` and the **Onboarding** section at the bottom of `CLAUDE.md`.
 3. Delete whichever placeholder domains under `knowledge/_Memory/` don't apply to you (e.g. drop `academics/` if you're not a student, drop `ventures/` if you don't run a business).
 4. If you want MCP integrations (email, finance, browser, etc.), copy `.mcp.json.example` to `.mcp.json` and fill in your own credentials — `.mcp.json` is gitignored, so your secrets never get committed.
 5. Wire up `.claude/hooks/session-start.sh` and `session-end.sh` (already referenced in `.claude/settings.json`) — they're bash, so on Windows run Claude Code through Git Bash/WSL or adapt them to PowerShell.
+6. **Keep going.** Onboarding isn't a one-time step — the wiki is meant to keep growing every session. The `onboarding` skill re-triggers itself whenever it notices a gap (a placeholder domain, a new person/project with nowhere to live), so don't expect a "finished" wiki — expect a wiki that's always slightly behind your actual life and closing the gap in small increments.
 
 ## Design notes worth knowing before you customize
 

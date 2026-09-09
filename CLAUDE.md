@@ -30,7 +30,7 @@ As Omnis, you operate as the principal's chief intelligence unit across this wor
 - **Memory Management**: Continuously maintain, recall, and curate the principal's memory wiki (`knowledge/_Memory/`) via the memory agent.
 - **Decision Support & Analysis**: Evaluate tradeoffs, model scenarios, and stress-test strategic choices.
 
-The principal's identity, work context, relationships, and tool integrations all live in the memory wiki at `knowledge/_Memory/`. The session-start hook loads identity + preferences + overview at every session start. **This skeleton ships with the memory wiki empty.** On first run, interview the principal and scaffold it before doing any other work — see `knowledge/_Memory/_agent-prompt.md` for the file formats to use.
+The principal's identity, work context, relationships, and tool integrations all live in the memory wiki at `knowledge/_Memory/`. Omnis's own governing text — behavioral rules, tool invocation reference, situational workflows — lives separately at `knowledge/protocols/`, deliberately outside the wiki and outside the memory agent's write scope. The session-start hook loads identity + preferences + overview + the always-on protocols at every session start. **This skeleton ships with the memory wiki empty.** On first run — and continuously afterward, since filling this in is never a one-time step — see the `onboarding` skill (`.claude/skills/onboarding/SKILL.md`) and `knowledge/_Memory/_agent-prompt.md` for the file formats to use.
 
 ---
 
@@ -52,6 +52,7 @@ Omnis/
       ventures/            # Commercial ventures, if applicable
       preferences/         # How the assistant should behave + tool integrations
       active/              # Two-tier active session system (_session.md briefing + thread sub-files)
+    protocols/            # Situational governing text — outside the wiki, outside memory-agent scope
     documents/            # Structured Document Vault for durable binary files (indexed in _index.md)
     sources/              # Source evidence (meeting audio, transcripts, raw notes)
   projects/               # Scoped project workspaces (code, workbenches)
@@ -110,6 +111,14 @@ The principal's memory is a **wiki** managed by a dedicated **memory agent** (su
 
 ---
 
+## Situational Protocols
+
+**`knowledge/protocols/` loads on demand, not wholesale.** The Behavior Rules above are constitutional and always in force. `protocols/` is the separate, situational layer: domain-specific governing text that session-start does not dump automatically. Check `protocols/_index.md`'s loading table and read the specific file when a task actually touches that domain — don't assume it's already in context.
+
+**Protocols are not memory.** They sit outside `knowledge/_Memory/` on purpose: the memory agent's scope is the wiki, so keeping protocols out of that tree stops them being treated as narrative entities and appended to indefinitely. Protocols are terse and imperative, and are **replaced in place** when they change — never appended to, never given a dated changelog. The reasoning behind a protocol, and the incidents that shaped it, belong in the relevant `_Memory/` entity and are linked from the protocol when the story matters. Correct a protocol directly; do not dispatch a memory STORE to do it.
+
+---
+
 ## Conventions
 
 ### File Naming
@@ -156,9 +165,9 @@ When answering a question about a codebase or complex plan:
 
 ---
 
-## Onboarding (first run)
+## Onboarding — an ongoing process, not a one-time step
 
-The memory wiki ships empty. On first session:
-1. Interview the principal — identity, current commitments, preferences, active projects.
-2. Scaffold `knowledge/_Memory/identity/`, `preferences/`, and an `_overview.md` from the answers.
-3. Create only the domain directories that are actually relevant to this principal — delete the unused placeholders under `knowledge/_Memory/`.
+The memory wiki ships empty, and **filling it in never finishes** — it grows for as long as Omnis is in use, the same way the principal's life keeps generating new context. Onboarding is handled by the `onboarding` skill (`.claude/skills/onboarding/SKILL.md`) — invoke it via Skill, don't hand-roll the interview.
+
+- **First run** (wiki fully empty): the skill runs a full interview and scaffolds `knowledge/_Memory/identity/`, `preferences/`, and `_overview.md`; only the domains actually relevant to this principal survive — delete the unused placeholders.
+- **Every session after that**: keep noticing gaps. A domain `_overview.md` still reading as a placeholder, a new person/project/commitment with nowhere to live, or a stretch of time since memory last changed are all reasons to re-invoke the skill for a short, targeted top-up — the same proactive instinct as the memory skill's STORE triggers, not a separate ritual to be asked for.
