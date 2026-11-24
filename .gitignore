@@ -47,6 +47,10 @@ knowledge/sources/meetings/raw/*.m4a
 knowledge/sources/meetings/raw/*.mp3
 knowledge/sources/meetings/raw/*.wav
 
+# Document vault: binaries and extracts stay local; only the ledger is tracked
+knowledge/documents/*
+!knowledge/documents/_index.md
+
 # Worktrees created by the delegate skill
 .claude/worktrees/
 .worktrees

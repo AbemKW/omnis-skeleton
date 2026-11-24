@@ -10,6 +10,5 @@ This is the wiki's home page. It should always be a short, current narrative map
 - [[_Memory/work/_overview|Work]] — employment & professional network.
 - [[_Memory/research/_overview|Research]] — if applicable.
 - [[_Memory/ventures/_overview|Ventures]] — if applicable.
-- [[_Memory/preferences/_overview|Preferences]] — how the assistant should behave.
 
-Delete any domain that doesn't apply to this principal once onboarding is done.
+Delete any domain that doesn't apply to this principal once onboarding is done. How the assistant behaves is not memory: it lives in `knowledge/protocols/`.
